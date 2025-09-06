@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">  
+    <link rel="stylesheet" href="memorama.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Memorama</h1>
+            <div class="info-juego">
+                <div class="info-item">
+                    <span>Intentos: </span>
+                    <span id="intentos">0</span>
+                </div>
+                <div class="info-item">
+                    <span>Tiempo: </span>
+                    <span id="timer">00:00</span>
+                </div>
+                
+            </div>
+        </header>
+
+        <main>
+            <section class="game-controls">
+                <div class="difficulty">
+                    <label for="difficulty">Dificultad:</label>
+                    <select id="difficulty">
+                        <option value="easy">Fácil (4x4)</option>
+                    </select>
+                </div>
+                <button id="start-btn">Nuevo Juego</button>
+            </section>
+
+            <section class="game-board" id="game-board">
+                <!-- Las cartas se generan con JavaScript -->
+            </section>
+
+        </main>
+    </div>
+
+    <script src="memorama.js"></script>
+</body>
+</html>
