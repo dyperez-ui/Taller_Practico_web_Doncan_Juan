@@ -1,26 +1,56 @@
 <!DOCTYPE html>
 <html lang="es">
-    <link href="Hist.css>">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memorama</title>
+    <link rel="stylesheet" href="Hist.css">
 </head>
 <body>
-        <h1>Lista de Tareas</h1>
+    <div class="container">
+        <header>
+            <h1>Memorama</h1>
+            <div class="game-info">
+                <div class="info-item">
+                    <span>Intentos: </span>
+                    <span id="attempts">0</span>
+                </div>
+                <div class="info-item">
+                    <span>Tiempo: </span>
+                    <span id="timer">00:00</span>
+                </div>
+                <div class="info-item">
+                    <span>Mejor tiempo: </span>
+                    <span id="best-time">--:--</span>
+                </div>
+            </div>
+        </header>
 
-        <form id="Tarea">
-            <label for="desc_tarea">Descripcion:</label>
-            <input type="text" id="desc_tarea" name="desc_tarea" required>
+        <main>
+            <section class="game-controls">
+                <div class="difficulty">
+                    <label for="difficulty">Dificultad:</label>
+                    <select id="difficulty">
+                        <option value="easy">Fácil (4x4)</option>
+                        <option value="medium">Medio (4x5)</option>
+                        <option value="hard">Difícil (5x6)</option>
+                    </select>
+                </div>
+                <button id="start-btn">Nuevo Juego</button>
+            </section>
 
-            <label for="fecha_tarea">Fecha:</label>
-            <input type="date" id="fecha_tarea" name="fecha_tarea" required>
+            <section class="game-board" id="game-board">
+                <!-- Las cartas se generarán dinámicamente con JavaScript -->
+            </section>
 
-            <button type="submit" id="BtnGuardar">Subir al sistema</button>
-        </form>
-        <br>
-        <button>Ver tareas registradas</button>
+            <section class="game-result hidden" id="game-result">
+                <h2>¡Felicidades!</h2>
+                <p>Has completado el juego en <span id="final-time">00:00</span> con <span id="final-attempts">0</span> intentos.</p>
+                <button id="play-again-btn">Jugar de nuevo</button>
+            </section>
+        </main>
+    </div>
 
-    
-    <script src="Hist.css"></script>
+    <script src="Hist.js"></script>
 </body>
 </html>
