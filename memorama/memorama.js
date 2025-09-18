@@ -1,7 +1,7 @@
 // definir lo q sale en las cartas
 const simbolos = [
     'hola','adios','arriba','abajo','izquierda','derecha',
-    'A','B','Z'
+    'Jhoel','Maikol','Juandiego','Doncan'
 ];
 // pares totales = el largo del array
 const totalPares = simbolos.length;
@@ -83,7 +83,7 @@ function guardarRecord() {
         };
 
         store.put(record);
-        console.log("✅ Record guardado:", record);
+        console.log(" Record guardado:", record);
     } catch (error) {
         console.error("Error al guardar record:", error);
     }
@@ -92,11 +92,11 @@ function guardarRecord() {
 
 function cambiarNivel(nivel) {
    if (nivel === 'facil') {
-     cartasNiveles = 2;// 2 pares de cartas
+     cartasNiveles = 4;// 2 pares de cartas
    } else if (nivel === 'medio') {
      cartasNiveles = 6;
    } else if (nivel === 'dificil') {
-     cartasNiveles = 9;
+     cartasNiveles = 10;
    }
     IniciarJuego();
 };
@@ -228,6 +228,15 @@ function LasCartasSonIguales() {
 
   cartasVolteadas = []; // se limpia el array de cartas volteadas (siempre se ejecuta)
 }
+
+
+abrirBaseDeDatos().then(() => {
+    console.log("Base de datos inicializada");
+    IniciarJuego();
+}).catch(error => {
+    console.error("Error al inicializar BD:", error);
+    IniciarJuego(); // Inicia el juego aunque falle la base de datos
+});
 
 
 //iniciar el juego

@@ -1,8 +1,7 @@
-
-/* memorama.css */
+/* memorama.css - Versión mejorada pero sencilla */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #d0c7e2;
+    font-family: 'Arial', sans-serif;
+    background-color: #e6d7ff;
     margin: 0;
     padding: 20px;
 }
@@ -10,63 +9,92 @@ body {
 .container {
     max-width: 800px;
     margin: 0 auto;
-    background: rgb(179, 29, 29);
+    background: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    
+    text-align: center;
 }
 
 header {
-    text-align: center;
     margin-bottom: 20px;
 }
 
+h1 {
+    color: #6a0dad;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
 .info-tiempo {
-    font-size: 18px;
-    margin: 10px 0;
+    font-size: 1.1rem;
+    color: #555;
+    font-weight: bold;
+    background: #f0f0f0;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.controles-nivel {
+    margin: 15px 0;
+}
+
+.controles-nivel button {
+    padding: 10px 15px;
+    margin: 0 5px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.controles-nivel button:hover {
+    background-color: #7d2dc1;
+    transform: scale(1.05);
 }
 
 .memorama-inicio {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 10px;
-    margin-top: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 20px auto;
+    max-width: 500px;
 }
 
 .carta {
-    width: 100px;
-    height: 100px;
-    background-color: #369afd;
+    width: 100%;
+    aspect-ratio: 1/1;
+    background-color: #6a0dad;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 100px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 24px;
-    font-weight: bold;
-    transition: transform 0.3s, background-color 0.3s;
+    font-size: 0;
+    transition: all 0.3s;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
-
-/* Cuando la carta está volteada (mostrando el símbolo) */
 .carta.volteada {
-    background-color: white;
-    color: black;
+    background-color: #f9f9f9;
+    font-size: 1.5rem;
+    color: #6a0dad;
+    font-weight: bold;
 }
 
-/* El símbolo está oculto por defecto */
-.simbolo {
-    display: none;
+.carta.encontrada {
+    background-color: #4caf50;
+    color: white;
+    cursor: default;
 }
 
-/* Cuando la carta está volteada, muestra el símbolo */
-.carta.volteada .simbolo {
-    display: block;
+.info-intentos {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #555;
+    font-size: 1.1rem;
 }
-
-/* Efecto hover para las cartas */
-.carta:hover {
-    transform: scale(1.05);
-}
-
-
