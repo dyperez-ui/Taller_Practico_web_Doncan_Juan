@@ -5,6 +5,7 @@ const simbolos = [
 ];
 // pares totales = el largo del array
 const totalPares = simbolos.length;
+
 // variables
 let cartas = [];
 let cartasVolteadas = [];
@@ -13,7 +14,19 @@ let tiempoInicio = 0;
 let tiempoJugando = 0;
 let IntervaloTiempo = null;
 let intentos = 0;
+let cartasNiveles = totalPares;
 
+
+function cambiarNivel(nivel) {
+   if (nivel === 'facil') {
+     cartasNiveles = 2;// 2 pares de cartas
+   } else if (nivel === 'medio') {
+     cartasNiveles = 6;
+   } else if (nivel === 'dificil') {
+     cartasNiveles = 9;
+   }
+    IniciarJuego();
+};
 
 //emepezar el temporizador
 function empezarTemporizador() {
@@ -129,9 +142,9 @@ function LasCartasSonIguales() {
     ParesEncontrados++; // se suma 1 a los pares encontrados
 
     // si los pares encontrados es igual al total de pares salta una alerta de que ganamos
-    if(ParesEncontrados === totalPares){
+    if(ParesEncontrados === cartasNiveles) {
       clearInterval(IntervaloTiempo); // se detiene el tiempo
-      alert('Felicidades, ganaste!!!!!!!! \n${intentos}');
+      alert(`Felicidades, ganaste!!!!!!!! \nIntentos: ${intentos}`);
     }
   } else {
     // si no son iguales se les quita la clase de volteada
@@ -146,16 +159,16 @@ function LasCartasSonIguales() {
 //iniciar el juego
 function IniciarJuego() {
 
-  cartas = mezclarCartas([...simbolos, ...simbolos]);
+cartas = mezclarCartas([...simbolos.slice(0, cartasNiveles), ...simbolos.slice(0, cartasNiveles)]);
   ParesEncontrados = 0;
   cartasVolteadas = []; //inicia el array de cartas volteadas vacio
   tiempoInicio = 0;//inicia el tiempo en 0
   tiempoJugando = 0;
-  intentos = 0;
-  IntentosActualizados();
   clearInterval(IntervaloTiempo); // limpia el intervalo de tiempo
   actualizarTiempo();
   empezarTemporizador();
+  intentos = 0;
+  IntentosActualizados();
 
   const ContenedorDelJuego = document.querySelector('.memorama-inicio');
   ContenedorDelJuego.innerHTML = '';// limpiar el tablero y borra todo lo anterior para una nueva partida
