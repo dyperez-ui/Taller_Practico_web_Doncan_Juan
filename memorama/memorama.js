@@ -6,6 +6,10 @@ const simbolos = [
 // pares totales = el largo del array
 const totalPares = simbolos.length;
 
+const DB_nombre = 'memoramaDB';// const de indexdb
+const DB_version = 1;
+
+
 // variables
 let cartas = [];
 let cartasVolteadas = [];
@@ -15,7 +19,126 @@ let tiempoJugando = 0;
 let IntervaloTiempo = null;
 let intentos = 0;
 let cartasNiveles = totalPares;
+let db = null;
 
+
+
+// Función para abrir la base de datos
+function abrirBaseDeDatos() {
+    return new Promise((resolve, reject) => {
+        const solicitud = indexedDB.open(DB_nombre, DB_version);
+        
+        solicitud.onerror = () => reject(solicitud.error);
+        solicitud.onsuccess = () => {
+            db = solicitud.result;
+            resolve(db);
+        };
+        
+        // Esta función se ejecuta solo si la base de datos no existe o cambia de versión
+        solicitud.onupgradeneeded = (event) => {
+            const database = event.target.result;
+            
+            // Crear almacén para guardar partidas en curso
+            if (!database.objectStoreNames.contains('partida')) {
+                database.createObjectStore('partida', { keyPath: 'id' });
+            }
+            
+            // Crear almacén para records (mejores puntuaciones)
+            if (!database.objectStoreNames.contains('records')) {
+                const store = database.createObjectStore('records', { keyPath: 'id' });
+                store.createIndex('nivel', 'nivel', { unique: false });
+            }
+        };
+    });
+};
+
+
+// Función para guardar el progreso actual
+async function guardarProgreso() {
+    try {
+        if (!db) await abrirBaseDeDatos();
+        
+        const transaction = db.transaction(['partida'], 'readwrite');
+        const store = transaction.objectStore('partida');
+        
+        const progreso = {
+            id: 'partida_actual',
+            nivel: cartasNiveles,
+            paresEncontrados: ParesEncontrados,
+            intentos: intentos,
+            tiempo: tiempoJugando,
+            cartas: cartas,
+            fecha: new Date()
+        };
+        
+        store.put(progreso);
+        console.log("Progreso guardado");
+    } catch (error) {
+        console.error("Error al guardar:", error);
+    }
+};
+
+
+// Cargar partida guardada y reconstruir tablero
+function cargarProgreso() {
+    if (!db) {
+        abrirBaseDeDatos().onsuccess = () => cargarProgreso();
+        return;
+    }
+
+    const transaction = db.transaction(['partida'], 'readonly');
+    const store = transaction.objectStore('partida');
+    const solicitud = store.get('partida_actual');
+
+    solicitud.onsuccess = () => {
+        const progreso = solicitud.result;
+        if (progreso) {
+            // Restaurar variables
+            cartasNiveles = progreso.nivel;
+            ParesEncontrados = progreso.paresEncontrados;
+            intentos = progreso.intentos;
+            tiempoJugando = progreso.tiempo;
+            cartas = progreso.cartas;
+
+            // Pintar tablero
+            const ContenedorDelJuego = document.querySelector('.memorama-inicio');
+            ContenedorDelJuego.innerHTML = '';
+
+            cartas.forEach(simbolo => {
+                const carta = crearCarta(simbolo);
+                ContenedorDelJuego.appendChild(carta);
+            });
+
+            // Marcar cartas descubiertas
+            const cartasDOM = document.querySelectorAll('.carta');
+            cartasDOM.forEach(carta => {
+                const simbolo = carta.querySelector('.simbolo').textContent;
+                let count = cartas.filter(s => s === simbolo).length;
+                if (count === 0) {
+                    carta.classList.add('volteada');
+                    carta.removeEventListener('click', carta.UsoClick);
+                }
+            });
+
+            // Actualizar UI
+            IntentosActualizados();
+            actualizarTiempo();
+
+            // Retomar temporizador
+            tiempoInicio = Date.now() - tiempoJugando;
+            clearInterval(IntervaloTiempo);
+            IntervaloTiempo = setInterval(() => {
+                tiempoJugando = Date.now() - tiempoInicio;
+                actualizarTiempo();
+            }, 1000);
+        }
+    };
+
+    solicitud.onerror = () => {
+        console.error("Error al cargar progreso:", solicitud.error);
+    };
+}
+// Llamar a esta función cuando el jugador gane la partida
 
 function cambiarNivel(nivel) {
    if (nivel === 'facil') {
@@ -145,6 +268,7 @@ function LasCartasSonIguales() {
     if(ParesEncontrados === cartasNiveles) {
       clearInterval(IntervaloTiempo); // se detiene el tiempo
       alert(`Felicidades, ganaste!!!!!!!! \nIntentos: ${intentos}`);
+      guardarRecord(); // guarda el record en la base de datos
     }
   } else {
     // si no son iguales se les quita la clase de volteada
@@ -158,8 +282,10 @@ function LasCartasSonIguales() {
 
 //iniciar el juego
 function IniciarJuego() {
-
-cartas = mezclarCartas([...simbolos.slice(0, cartasNiveles), ...simbolos.slice(0, cartasNiveles)]);
+  // Selecciona los primeros N símbolos según el nivel y crea pares (duplica el array)
+  const simbolosSeleccionados = simbolos.slice(0, cartasNiveles);
+  cartas = mezclarCartas([...simbolosSeleccionados, ...simbolosSeleccionados]);
+  
   ParesEncontrados = 0;
   cartasVolteadas = []; //inicia el array de cartas volteadas vacio
   tiempoInicio = 0;//inicia el tiempo en 0

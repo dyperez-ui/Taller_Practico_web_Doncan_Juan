@@ -2,7 +2,7 @@
 /* memorama.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #d0c7e2;
     margin: 0;
     padding: 20px;
 }
@@ -10,7 +10,7 @@ body {
 .container {
     max-width: 800px;
     margin: 0 auto;
-    background: white;
+    background: rgb(179, 29, 29);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -28,7 +28,7 @@ header {
 
 .memorama-inicio {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+    grid-template-columns: repeat(4, 1fr); 
     gap: 10px;
     margin-top: 20px;
 }
@@ -36,12 +36,12 @@ header {
 .carta {
     width: 100px;
     height: 100px;
-    background-color: #007bff;
+    background-color: #369afd;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 8px;
+    border-radius: 100px;
     cursor: pointer;
     font-size: 24px;
     font-weight: bold;
