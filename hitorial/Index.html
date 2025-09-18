@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de tareas</title>
+    <link rel="stylesheet" href="Hist.css">
+</head>
+<body>
+  
+<div class="contenedor">
+    <h1>Gestor De Tareas</h1>
+
+<!-- crea el formulario para que el ususario ponga sus datos -->
+    <section class="formul-tareas">
+        <h2>Agregar Nueva Tarea</h2>
+        <form id="formularioDetareas">
+    <div 
+            class="GrupoForm">
+            <label for="FechaTarea">Fecha de la tarea a realizar</label>
+            <input type="date" id="FechaTarea" required>
+    </div>
+    <div 
+                class="GrupoForm">
+                <label for="descripcionTarea">Descripcion de la tarea</label>
+             <textarea  id="descripcionTarea" placeholder="Describa la tarea" required></textarea>
+    </div>
+            <button>Agregar Tarea</button>
+        </form>
+    </section>
+<br>
+<!-- buscar por tareas y iltrar por tareas -->
+    <section class="controlartareas">
+    <div class="buscartarea">
+            <input type="text" id="busqueda" placeholder="buscar la tarea">
+    </div>
+    <div 
+            class="filtro">
+            <label for="filtro-tarea"> Filtrar tareas por:</label>
+        <select  id="filtro-tarea" >
+            <option value="todas">Total de Tareas</option>
+            <option value="pendientes"> Tareas Pendients</option>
+            <option value="completadas">Tareas Completadas</option>
+        </select>
+    </div>
+    </section>
+
+    <!-- contador de tareas pendientes y completadas -->
+
+    <section class="contador-tareas">
+        <div class="contador">
+            <span class="conteo-total">Total de tareas pendientes</span>
+            <span id="pendientes-total">0</span>
+            <br>
+             <span class="conteo-total">Total de tareas completadas</span>
+            <span id="completadas-total">0</span>
+        </div>
+    </section>
+
+
+            <!-- mirar lista de tareas -->
+             <section class="lista-tareas">
+                <h2>Lista de Tareas</h2>
+                <ul id="contenedor-tareas"></ul>
+             </section>
+
+</div>
+
+    <script src="Hist.js"></script>
+</body>
+</html>
