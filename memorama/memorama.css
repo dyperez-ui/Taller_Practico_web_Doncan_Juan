@@ -1,9 +1,4 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+
 
 body {
     background-color: #f0f8ff;
@@ -19,7 +14,7 @@ body {
 .container {
     max-width: 800px;
     width: 100%;
-    background-color: white;
+    background-color: rgb(250, 236, 236);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
