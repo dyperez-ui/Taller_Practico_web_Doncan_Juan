@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego del Ahorcado</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Juego del Ahorcado</h1>
+        
+        <div class="stats">
+            <p>Partidas ganadas: <span id="wins">0</span></p>
+            <p>Partidas perdidas: <span id="losses">0</span></p>
+        </div>
+        
+        <!-- Selector de categorías -->
+        <div class="category-selector">
+            <h2>Selecciona una categoría:</h2>
+            <div class="categories">
+                <button class="category-btn active" data-category="animals">Animales</button>
+                <button class="category-btn" data-category="countries">Países</button>
+                <button class="category-btn" data-category="fruits">Frutas</button>
+            </div>
+        </div>
+        
+        <div class="game-container">
+            <div class="hangman-container">
+                <div class="hangman">
+                    <div class="scaffold">
+                        <div class="pole"></div>
+                        <div class="top"></div>
+                        <div class="rope"></div>
+                        <div class="base"></div>
+                    </div>
+                    <div class="figure hidden" id="head"></div>
+                    <div class="figure hidden" id="body"></div>
+                    <div class="figure hidden" id="left-arm"></div>
+                    <div class="figure hidden" id="right-arm"></div>
+                    <div class="figure hidden" id="left-leg"></div>
+                    <div class="figure hidden" id="right-leg"></div>
+                </div>
+            </div>
+            
+            <div class="game-info">
+                <div class="category-display">
+                    <p>Categoría: <span id="current-category">Animales</span></p>
+                </div>
+                
+                <div class="word-display" id="word-display"></div>
+                
+                <div class="wrong-letters-container">
+                    <p>Letras incorrectas: <span id="wrong-count">0</span>/6</p>
+                    <div id="wrong-letters"></div>
+                </div>
+                
+                <div class="keyboard" id="keyboard">
+                    <!-- Las teclas se generarán con JavaScript -->
+                </div>
+                
+                <div class="message" id="message">
+                    <p id="message-text"></p>
+                    <button id="play-again">Jugar de nuevo</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="session-info">
+            <button id="reset-game">Reiniciar Juego</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
