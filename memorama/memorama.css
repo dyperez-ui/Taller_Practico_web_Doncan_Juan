@@ -1,130 +1,72 @@
 
-
+/* memorama.css */
 body {
-    background-color: #f0f8ff;
-    color: #333;
-    line-height: 1.6;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
     padding: 20px;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .container {
     max-width: 800px;
-    width: 100%;
-    background-color: rgb(250, 236, 236);
+    margin: 0 auto;
+    background: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 header {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
-h1 {
-    color: #2c3e50;
-    margin-bottom: 15px;
-    font-size: 2.5rem;
+.info-tiempo {
+    font-size: 18px;
+    margin: 10px 0;
 }
 
-.game-info {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-}
-
-.info-item {
-    background-color: #f8f9fa;
-    padding: 10px 15px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-.game-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
-}
-
-.difficulty {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-select {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-button {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #2980b9;
-}
-
-.game-board {
+.memorama-inicio {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas */
     gap: 10px;
-    margin: 0 auto;
-    max-width: 500px;
+    margin-top: 20px;
 }
 
-.card {
-    aspect-ratio: 1/1;
-    background-color: #3498db;
-    border-radius: 5px;
-    cursor: pointer;
+.carta {
+    width: 100px;
+    height: 100px;
+    background-color: #007bff;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2rem;
-    color: transparent;
-    transition: all 0.3s ease;
-    transform-style: preserve-3d;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+    transition: transform 0.3s, background-color 0.3s;
 }
 
-@media (max-width: 600px) {
-    .game-info {
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
-    }
-    
-    .game-controls {
-        flex-direction: column;
-    }
-    
-    .game-board {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
-    }
-    
-    .card {
-        font-size: 1.5rem;
-    }
+/* Cuando la carta está volteada (mostrando el símbolo) */
+.carta.volteada {
+    background-color: white;
+    color: black;
 }
 
+/* El símbolo está oculto por defecto */
+.simbolo {
+    display: none;
+}
+
+/* Cuando la carta está volteada, muestra el símbolo */
+.carta.volteada .simbolo {
+    display: block;
+}
+
+/* Efecto hover para las cartas */
+.carta:hover {
+    transform: scale(1.05);
+}
 
 

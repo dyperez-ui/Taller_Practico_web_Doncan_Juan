@@ -9,6 +9,35 @@ const totalPares = simbolos.length;
 let cartas = [];
 let cartasVolteadas = [];
 let ParesEncontrados = 0;
+let tiempoInicio = 0;
+let tiempoJugando = 0;
+let IntervaloTiempo = null;
+
+
+//emepezar el temporizador
+function empezarTemporizador() {
+tiempoInicio = Date.now(); // obtiene el tiempo actual en milisegundos
+clearInterval(IntervaloTiempo); // limpia cualquier intervalo previo
+
+IntervaloTiempo =setInterval( () => {
+
+  tiempoJugando = Date.now() - tiempoInicio; // calcula el tiempo jugado
+  actualizarTiempo(); // actualiza la visualizacion del tiempo
+ },1000); //actualiza el tiempo cada segundo
+};
+
+
+function actualizarTiempo() {
+
+const seg = Math.floor( (tiempoJugando / 1000));
+const min = Math.floor( seg / 60);
+
+//fllega el id timer
+const ContadorTIempo = document.getElementById('timer');
+if (ContadorTIempo) {
+ ContadorTIempo.textContent = `Tiempo: ${min} : ${seg % 60}`;
+};
+};
 
 //mezclar las cartas/ desordenar las cartas
 function mezclarCartas(array) {
@@ -85,6 +114,7 @@ function LasCartasSonIguales() {
 
     // si los pares encontrados es igual al total de pares salta una alerta de que ganamos
     if(ParesEncontrados === totalPares){
+      clearInterval(IntervaloTiempo); // se detiene el tiempo
       alert('Felicidades, ganaste!!!!!!!!');
     }
   } else {
@@ -102,7 +132,12 @@ function IniciarJuego() {
 
   cartas = mezclarCartas([...simbolos, ...simbolos]);
   ParesEncontrados = 0;
-  cartasVolteadas = [];
+  cartasVolteadas = []; //inicia el array de cartas volteadas vacio
+  tiempoInicio = 0;//inicia el tiempo en 0
+  tiempoJugando = 0;
+  clearInterval(IntervaloTiempo); // limpia el intervalo de tiempo
+  actualizarTiempo();
+  empezarTemporizador();
 
   const ContenedorDelJuego = document.querySelector('.memorama-inicio');
   ContenedorDelJuego.innerHTML = '';// limpiar el tablero y borra todo lo anterior para una nueva partida
