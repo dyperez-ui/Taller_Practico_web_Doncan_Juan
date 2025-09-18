@@ -12,6 +12,7 @@ let ParesEncontrados = 0;
 let tiempoInicio = 0;
 let tiempoJugando = 0;
 let IntervaloTiempo = null;
+let intentos = 0;
 
 
 //emepezar el temporizador
@@ -33,11 +34,22 @@ const seg = Math.floor( (tiempoJugando / 1000));
 const min = Math.floor( seg / 60);
 
 //fllega el id timer
-const ContadorTIempo = document.getElementById('timer');
+const ContadorTIempo = document.getElementById('tiempoId')
 if (ContadorTIempo) {
  ContadorTIempo.textContent = `Tiempo: ${min} : ${seg % 60}`;
 };
 };
+
+function IntentosActualizados() {
+
+  const ContadorIntentos = document.getElementById('intentosId')
+  if (ContadorIntentos) {
+    ContadorIntentos.textContent = intentos;
+  };
+};
+
+
+
 
 //mezclar las cartas/ desordenar las cartas
 function mezclarCartas(array) {
@@ -90,6 +102,10 @@ function cartaVolteada(carta) {
       // la carta se agrega al array de cartas volteadas
       cartasVolteadas.push(carta);
   };
+  if(cartasVolteadas.length === 2){
+    intentos++;
+    IntentosActualizados();
+  };
   // si las cartas volteadas son iguales
   //si son 2 las cartas volteadas
   if( cartasVolteadas.length === 2){
@@ -115,7 +131,7 @@ function LasCartasSonIguales() {
     // si los pares encontrados es igual al total de pares salta una alerta de que ganamos
     if(ParesEncontrados === totalPares){
       clearInterval(IntervaloTiempo); // se detiene el tiempo
-      alert('Felicidades, ganaste!!!!!!!!');
+      alert('Felicidades, ganaste!!!!!!!! \n${intentos}');
     }
   } else {
     // si no son iguales se les quita la clase de volteada
@@ -135,6 +151,8 @@ function IniciarJuego() {
   cartasVolteadas = []; //inicia el array de cartas volteadas vacio
   tiempoInicio = 0;//inicia el tiempo en 0
   tiempoJugando = 0;
+  intentos = 0;
+  IntentosActualizados();
   clearInterval(IntervaloTiempo); // limpia el intervalo de tiempo
   actualizarTiempo();
   empezarTemporizador();
