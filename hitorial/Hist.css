@@ -1,0 +1,50 @@
+/*fondo */
+body {
+    background-color: #7b6e6e;
+    margin: 0;
+    padding: 20px;
+}
+
+/* el cuadrado principa(el grandote blanco) */
+.contenedor {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgb(255, 253, 253);
+    padding: 20px;
+    border-radius: 8px;
+   
+}
+
+/* aca se lo pongo a los titulos y botones */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #1782e0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+}
+
+
+button {
+    background: #007bff;
+    color: white; 
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+
+
+
+
+
+
+
+
