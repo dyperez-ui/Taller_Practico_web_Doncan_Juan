@@ -53,90 +53,40 @@ function abrirBaseDeDatos() {
 };
 
 
-// Función para guardar el progreso actual
-async function guardarProgreso() {
+function guardarRecord() {
+    if (!db) {
+        const solicitud = indexedDB.open(DB_nombre, DB_version);
+
+        solicitud.onsuccess = () => {
+            db = solicitud.result;
+            guardarRecord(); // vuelve a intentar ahora sí con db inicializada
+        };
+
+        solicitud.onerror = () => {
+            console.error("Error al abrir DB para guardar record:", solicitud.error);
+        };
+
+        return; // salimos y esperamos al reintento
+    }
+
     try {
-        if (!db) await abrirBaseDeDatos();
-        
-        const transaction = db.transaction(['partida'], 'readwrite');
-        const store = transaction.objectStore('partida');
-        
-        const progreso = {
-            id: 'partida_actual',
+        const transaction = db.transaction(['records'], 'readwrite');
+        const store = transaction.objectStore('records');
+
+        const recordId = `record_${cartasNiveles}_${Date.now()}`;
+        const record = {
+            id: recordId,
             nivel: cartasNiveles,
-            paresEncontrados: ParesEncontrados,
             intentos: intentos,
             tiempo: tiempoJugando,
-            cartas: cartas,
             fecha: new Date()
         };
-        
-        store.put(progreso);
-        console.log("Progreso guardado");
+
+        store.put(record);
+        console.log("✅ Record guardado:", record);
     } catch (error) {
-        console.error("Error al guardar:", error);
+        console.error("Error al guardar record:", error);
     }
-};
-
-
-// Cargar partida guardada y reconstruir tablero
-function cargarProgreso() {
-    if (!db) {
-        abrirBaseDeDatos().onsuccess = () => cargarProgreso();
-        return;
-    }
-
-    const transaction = db.transaction(['partida'], 'readonly');
-    const store = transaction.objectStore('partida');
-    const solicitud = store.get('partida_actual');
-
-    solicitud.onsuccess = () => {
-        const progreso = solicitud.result;
-        if (progreso) {
-            // Restaurar variables
-            cartasNiveles = progreso.nivel;
-            ParesEncontrados = progreso.paresEncontrados;
-            intentos = progreso.intentos;
-            tiempoJugando = progreso.tiempo;
-            cartas = progreso.cartas;
-
-            // Pintar tablero
-            const ContenedorDelJuego = document.querySelector('.memorama-inicio');
-            ContenedorDelJuego.innerHTML = '';
-
-            cartas.forEach(simbolo => {
-                const carta = crearCarta(simbolo);
-                ContenedorDelJuego.appendChild(carta);
-            });
-
-            // Marcar cartas descubiertas
-            const cartasDOM = document.querySelectorAll('.carta');
-            cartasDOM.forEach(carta => {
-                const simbolo = carta.querySelector('.simbolo').textContent;
-                let count = cartas.filter(s => s === simbolo).length;
-                if (count === 0) {
-                    carta.classList.add('volteada');
-                    carta.removeEventListener('click', carta.UsoClick);
-                }
-            });
-
-            // Actualizar UI
-            IntentosActualizados();
-            actualizarTiempo();
-
-            // Retomar temporizador
-            tiempoInicio = Date.now() - tiempoJugando;
-            clearInterval(IntervaloTiempo);
-            IntervaloTiempo = setInterval(() => {
-                tiempoJugando = Date.now() - tiempoInicio;
-                actualizarTiempo();
-            }, 1000);
-        }
-    };
-
-    solicitud.onerror = () => {
-        console.error("Error al cargar progreso:", solicitud.error);
-    };
 }
 // Llamar a esta función cuando el jugador gane la partida
 
