@@ -231,7 +231,7 @@ function checkGameStatus() {
         wins++;
         winsElement.textContent = wins;
         saveStats();
-        showMessage('¡Felicidades! Ganaste. 😊');
+        showMessage('¡Felicidades! Ganaste');
         gameActive = false;
         return;
     }
